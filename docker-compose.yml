@@ -1,0 +1,22 @@
+version: '3'
+services:
+  web:
+    image: nginx:latest
+    ports:
+    - "8080:80"
+    volumes:
+      - ./docker/code:/code
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+    - nginx-fpm-network
+    depends_on:
+    - php
+  php:
+    image: php:5.6-fpm
+    volumes:
+      - ./docker/code:/code
+    networks:
+      - nginx-fpm-network
+networks:
+  nginx-fpm-network:
+
